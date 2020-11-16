@@ -1,0 +1,48 @@
+<nav class="navbar" role="navigation" aria-label="main navigation">
+  <div class="navbar-brand">
+    <a class="navbar-item" href="https://bulma.io">
+      <img src="https://seeklogo.com/images/E/etiqa-logo-44A4E56F8C-seeklogo.com.png" alt="Etiqa API" />
+    </a>
+
+    <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+    </a>
+  </div>
+</nav>
+<section class="section">
+  <div class="container">
+    <div class="columns">
+      <div class="column">
+        <app-user-form 
+          *ngIf="stateMachine === 'CREATE_USER' || stateMachine === 'UPDATE_USER'"
+          [userData]="selectedUser"
+          (onCancelEvent)="showUserList()"></app-user-form>
+      </div>
+    </div>
+    <div class="columns">
+      <div class="column">
+        <div *ngIf="!users">No user data available.</div>
+        <h3 class="is-size-4">User List</h3>
+        <app-data-table *ngIf="users" 
+          [rows]="users"
+          [totalPage]="totalPage"
+          [currentPage]="currentPage"
+          [handleEdit]="showUpdateForm.bind(this)"
+          [handleRemove]="deleteUser.bind(this)"
+          [handleNavigate]="loadData.bind(this)"></app-data-table>
+      </div>
+    </div>
+    <div class="columns">
+      <div class="column">
+        <button class="button is-primary" (click)="showCreateUserForm()">
+          <span class="icon is-small">
+            <i class="fa fa-plus"></i>
+          </span>
+          <span>Create User</span>
+        </button>
+      </div>
+    </div>
+  </div>
+</section>

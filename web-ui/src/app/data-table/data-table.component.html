@@ -1,0 +1,58 @@
+<div class="table-container">
+  <table class="table is-bordered is-striped is-narrow is-hoverable is-fullwidth">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Username</th>
+        <th>Email</th>
+        <th>Phone</th>
+        <th>Skillsets</th>
+        <th>Hobby</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let r of rows; index as i; first as isFirst">
+        <td>{{r.id}}</td>
+        <td>{{r.username}}</td>
+        <td>{{r.email}}</td>
+        <td>{{r.phone ? r.phone : 'N/A'}}</td>
+        <td>{{r.skillsets ? r.skillsets : 'N/A'}}</td>
+        <td>{{r.hobby ? r.hobby : 'N/A'}}</td>
+        <td>
+          <div class="field has-addons">
+            <p class="control">
+              <button class="button is-info" (click)="handleEdit(r)">
+                <span class="icon">
+                  <i class="fa fa-edit"></i>
+                </span>
+                <span>Edit</span>
+              </button>
+            </p>
+            <p class="control">
+              <button class="button is-danger" (click)="handleRemove(r.id)">
+                <span class="icon">
+                  <i class="fa fa-trash"></i>
+                </span>
+                <span>Delete</span>
+              </button>
+            </p>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+    <tfoot *ngIf="currentPage && totalPage">
+      <tr>
+        <td colspan="7">
+          <nav class="pagination is-rounded" role="navigation" aria-label="pagination">
+            <a class="pagination-previous" *ngIf="currentPage > 1" (click)="handleNavigate(currentPage - 1)">Previous</a>
+            <a class="pagination-next" *ngIf="totalPage > 1 && currentPage != totalPage" (click)="handleNavigate(currentPage + 1)">Next page</a>
+            <ul class="pagination-list">
+              <li>Page {{currentPage}} of {{totalPage}}</li>
+            </ul>
+          </nav>
+        </td>
+      </tr>
+    </tfoot>
+  </table>
+</div>
