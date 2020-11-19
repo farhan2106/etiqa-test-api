@@ -6,7 +6,7 @@ Etiqa programming test.
 
 ## Installation
 
-1. Modify `ormconfig.json` for your environment.
+1. Rename `.env.sample` to `.env` and modify it for your environment.
 2. Run `npm install`
 
 ## Running the app
