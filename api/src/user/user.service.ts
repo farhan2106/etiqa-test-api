@@ -64,6 +64,14 @@ export class UserService {
       })
       .execute();
 
+    if (currentData[0].email !== data.email) {
+      await this.isEmailExist(data);
+    }
+
+    if (currentData[0].username !== data.username) {
+      await this.isUsernameExist(data);
+    }
+
     return await getConnection()
       .createQueryBuilder()
       .update(User)
