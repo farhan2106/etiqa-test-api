@@ -13,11 +13,12 @@ import { ApiService } from '../api.service';
 export class UserFormComponent implements OnInit {
 
   @Output() onCancelEvent = new EventEmitter();
-  @Input() userData = undefined;
+  @Input() userData: any = undefined;
 
   @ViewChild('userForm') public userForm: NgForm | undefined;
 
-  constructor(private apiService: ApiService) { }
+  constructor(private apiService: ApiService) {
+  }
 
   ngOnInit(): void {
   }
@@ -38,6 +39,7 @@ export class UserFormComponent implements OnInit {
       return
     }
 
+    console.log(this.userData)
     if (this.userData) {
       this.apiService.updateUser(Object.assign(this.userData, data))
         .pipe(
@@ -49,6 +51,7 @@ export class UserFormComponent implements OnInit {
         .subscribe(_ => {
           alert('User has been updated.');
           this.userForm && this.userForm.reset();
+          this.userData = undefined
           this.onCancelEvent.emit()
         });
     } else {
@@ -62,6 +65,7 @@ export class UserFormComponent implements OnInit {
         .subscribe(_ => {
           alert('User has been created.');
           this.userForm && this.userForm.reset();
+          this.userData = undefined
           this.onCancelEvent.emit()
         });
     }

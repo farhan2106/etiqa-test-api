@@ -28,6 +28,7 @@ export class AppComponent {
 
   showUserList() {
     this.stateMachine = 'USER_LIST';
+    this.selectedUser = undefined;
     this.loadData();
   }
 

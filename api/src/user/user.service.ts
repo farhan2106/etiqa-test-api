@@ -23,6 +23,11 @@ export class UserService {
   ) {}
 
   private async isUserExist(data) {
+    await this.isEmailExist(data)
+    await this.isUsernameExist(data)
+  }
+
+  private async isEmailExist(data) {
     const [_, countEmail] = await this.userRepository.findAndCount({
       where: { email: data.email }
     });
@@ -30,7 +35,9 @@ export class UserService {
     if (countEmail > 0) {
       throw new UserServiceError(USER_SERVICE_ERROR.EXIST, 'Email already exist.');
     }
+  }
 
+  private async isUsernameExist(data) {
     const [__, countUsername] = await this.userRepository.findAndCount({
       where: { username: data.username }
     });
@@ -57,8 +64,12 @@ export class UserService {
       })
       .execute();
 
-    if (currentData[0].email !== data.email || currentData[0].username !== data.username) {
-      await this.isUserExist(data);
+    if (currentData[0].email !== data.email) {
+      await this.isEmailExist(data);
+    }
+
+    if (currentData[0].username !== data.username) {
+      await this.isUsernameExist(data);
     }
 
     return await getConnection()
